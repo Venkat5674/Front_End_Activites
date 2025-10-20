@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Day6 - CSS Combinators</title>
+  <style>
+    /* Basic page styles */
+    body {
+      font-family: system-ui, -apple-system, Roboto, "Segoe UI", "Helvetica Neue", Arial;
+      line-height: 1.5;
+      margin: 24px;
+      background: #f7fafc;
+      color: #0f172a;
+    }
+
+    h1 { margin-bottom: 8px; }
+    p.lead { color: #334155; margin-top: 0; }
+
+    .demo {
+      margin: 18px 0 32px;
+      padding: 12px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 0 rgba(15,23,42,0.04);
+    }
+
+    .row { display: flex; gap: 18px; flex-wrap: wrap; }
+
+    /* Generic box used for visualization */
+    .box {
+      min-width: 120px;
+      padding: 10px;
+      border-radius: 6px;
+      background: linear-gradient(180deg,#e6f0ff,#dce9ff);
+      border: 2px solid #bcd3ff;
+      color: #042a5b;
+    }
+
+    .note { font-size: 13px; color: #475569; margin-top: 8px; }
+
+    /* -----------------------------------------
+       1) Descendant combinator (space)
+       Matches elements that are descendants (any level)
+       Selector example: .descendant .item
+       ----------------------------------------- */
+    .descendant .item {
+      background: linear-gradient(180deg,#fff6e6,#fff0d9);
+      border-color: #ffd59a;
+      color: #6a3b00;
+    }
+
+    /* -----------------------------------------
+       2) Child combinator (>)
+       Matches only direct children
+       Selector example: .parent > .child
+       ----------------------------------------- */
+    .parent > .child {
+      background: linear-gradient(180deg,#e6ffef,#d9ffee);
+      border-color: #8fe6b6;
+      color: #064c34;
+    }
+
+    /* -----------------------------------------
+       3) Adjacent sibling combinator (+)
+       Matches the element immediately following
+       Selector example: h3 + p
+       ----------------------------------------- */
+    .adjacent h3 + p {
+      background: linear-gradient(180deg,#fff0f6,#ffe6f0);
+      border-color: #ffbfdc;
+      color: #5a1036;
+    }
+
+    /* -----------------------------------------
+       4) General sibling combinator (~)
+       Matches any following siblings (not just immediate)
+       Selector example: h3 ~ p
+       ----------------------------------------- */
+    .general h3 ~ p {
+      background: linear-gradient(180deg,#f0f7ff,#e6f0ff);
+      border-color: #bcd8ff;
+      color: #0b3a66;
+    }
+
+    /* small helper for borders and spacing to show matching elements */
+    .box {
+      border: 2px solid rgba(0,0,0,0.06);
+    }
+    .label { font-weight: 600; font-size: 14px; margin-bottom: 6px; display:block; }
+    pre.selector {
+      background: #0b1220;
+      color: #cfe8ff;
+      padding: 10px;
+      border-radius: 6px;
+      overflow: auto;
+      font-size: 13px;
+      margin: 8px 0 0;
+    }
+
+    /* small responsive tweak */
+    @media (max-width:720px) {
+      .row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day6 — CSS Combinators</h1>
+  <p class="lead">Simple examples of the four main CSS combinators: descendant (space), child (&gt;), adjacent sibling (+) and general sibling (~).</p>
+
+  <!-- DESCENDANT -->
+  <section class="demo descendant" aria-label="Descendant combinator example">
+    <div class="label">1) Descendant combinator (space)</div>
+    <div class="row">
+      <div class="box">
+        <strong>HTML</strong>
+        <div class="note">
+          Any .item that is inside .descendant (at any depth) will match the selector <code>.descendant .item</code>.
+        </div>
+        <pre class="selector">&lt;div class="descendant"&gt;
+  &lt;div class="item"&gt;Matched (child)&lt;/div&gt;
+  &lt;div&gt;
+    &lt;div class="item"&gt;Matched (nested)&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="item">Matched (child)</div>
+          <div style="margin-top:6px;">
+            <div>
+              <div class="item">Matched (nested)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHILD -->
+  <section class="demo parent" aria-label="Child combinator example">
+    <div class="label">2) Child combinator (&gt;)</div>
+    <div class="row">
+      <div class="box">
+        <strong>HTML</strong>
+        <div class="note">
+          Only direct children of .parent with class .child are matched by <code>.parent &gt; .child</code>.
+        </div>
+        <pre class="selector">&lt;div class="parent"&gt;
+  &lt;div class="child"&gt;Matched (direct child)&lt;/div&gt;
+  &lt;div&gt;
+    &lt;div class="child"&gt;Not matched (grandchild)&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="child">Matched (direct child)</div>
+          <div style="margin-top:6px;">
+            <div>
+              <div class="child">Not matched (grandchild)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADJACENT SIBLING -->
+  <section class="demo adjacent" aria-label="Adjacent sibling combinator example">
+    <div class="label">3) Adjacent sibling combinator (+)</div>
+    <div class="row">
+      <div class="box">
+        <strong>HTML</strong>
+        <div class="note">
+          The selector <code>h3 + p</code> matches a &lt;p&gt; only if it immediately follows an &lt;h3&gt;.
+        </div>
+        <pre class="selector">&lt;div class="adjacent"&gt;
+  &lt;h3&gt;Title A&lt;/h3&gt;
+  &lt;p&gt;Matched (immediately after) &lt;/p&gt;
+
+  &lt;h3&gt;Title B&lt;/h3&gt;
+  &lt;div&gt;Some other element&lt;/div&gt;
+  &lt;p&gt;Not matched (not immediate)&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <h3 style="margin:0">Title A</h3>
+          <p style="margin:6px 0 0">Matched (immediately after)</p>
+
+          <h3 style="margin-top:12px;margin-bottom:0">Title B</h3>
+          <div style="margin-top:6px">Some other element</div>
+          <p style="margin-top:6px">Not matched (not immediate)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GENERAL SIBLING -->
+  <section class="demo general" aria-label="General sibling combinator example">
+    <div class="label">4) General sibling combinator (~)</div>
+    <div class="row">
+      <div class="box">
+        <strong>HTML</strong>
+        <div class="note">
+          The selector <code>h3 ~ p</code> matches any &lt;p&gt; that appears after an &lt;h3&gt; as a sibling (not necessarily immediate).
+        </div>
+        <pre class="selector">&lt;div class="general"&gt;
+  &lt;h3&gt;Heading&lt;/h3&gt;
+  &lt;p&gt;Matched (after) &lt;/p&gt;
+  &lt;div&gt;Other&lt;/div&gt;
+  &lt;p&gt;Also matched (after, non-immediate)&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <h3 style="margin:0">Heading</h3>
+          <p style="margin-top:6px">Matched (after)</p>
+          <div style="margin-top:6px">Other</div>
+          <p style="margin-top:6px">Also matched (after, non-immediate)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top:18px;color:#64748b;font-size:13px">
+    Tip: Try changing the HTML structure to see which elements get styled — that helps make combinators intuitive.
+  </footer>
+</body>
+</html>
