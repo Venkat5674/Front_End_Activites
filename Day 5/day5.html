@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Day5 - CSS Box Model & Backgrounds</title>
+  <style>
+    /* Basic page styles */
+    body {
+      font-family: system-ui, -apple-system, Roboto, "Segoe UI", "Helvetica Neue", Arial;
+      line-height: 1.5;
+      margin: 24px;
+      background: #f7fafc;
+      color: #0f172a;
+    }
+
+    h1 { margin-bottom: 8px; }
+    p.lead { color: #334155; margin-top: 0; }
+
+    .demo {
+      margin: 18px 0 32px;
+      padding: 12px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 0 rgba(15,23,42,0.04);
+    }
+
+    .row { display: flex; gap: 18px; flex-wrap: wrap; }
+
+    /* Generic box used for visualization */
+    .box {
+      min-width: 120px;
+      padding: 10px;
+      border-radius: 6px;
+      background: linear-gradient(180deg,#e6f0ff,#dce9ff);
+      border: 2px solid #bcd3ff;
+      color: #042a5b;
+    }
+
+    .note { font-size: 13px; color: #475569; margin-top: 8px; }
+
+    /* -----------------------------------------
+       Styles for each section
+       ----------------------------------------- */
+
+    /* Borders */
+    .border-example {
+      border: 5px solid #e11d48;
+      background: #fff1f2;
+    }
+
+    .border-example.dotted { border-style: dotted; }
+    .border-example.dashed { border-style: dashed; }
+    .border-example.double { border-style: double; }
+    .border-example.none { border: none; }
+
+    /* Paddings */
+    .padding-example {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      padding: 20px;
+      color: #166534;
+    }
+
+    .padding-example.top { padding-top: 40px; }
+    .padding-example.right { padding-right: 40px; }
+    .padding-example.bottom { padding-bottom: 40px; }
+    .padding-example.left { padding-left: 40px; }
+
+    /* Margins */
+    .margin-example {
+      background: #fef3c7;
+      border: 2px solid #fbbf24;
+      color: #92400e;
+      margin: 20px;
+    }
+
+    .margin-example.top { margin-top: 40px; }
+    .margin-example.right { margin-right: 40px; }
+    .margin-example.bottom { margin-bottom: 40px; }
+    .margin-example.left { margin-left: 40px; }
+
+    /* Border-radius */
+    .radius-example {
+      background: #e0e7ff;
+      border: 2px solid #a5b4fc;
+      color: #3730a3;
+      border-radius: 10px;
+    }
+
+    .radius-example.circle { border-radius: 50%; width: 80px; height: 80px; }
+    .radius-example.pill { border-radius: 50px; }
+
+    /* Background colors */
+    .bg-example {
+      padding: 20px;
+      color: white;
+      border: 2px solid #374151;
+    }
+
+    .bg-red { background-color: #dc2626; }
+    .bg-blue { background-color: #2563eb; }
+    .bg-green { background-color: #16a34a; }
+    .bg-gradient { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
+
+    /* Helpers */
+    .label { font-weight: 600; font-size: 14px; margin-bottom: 6px; display:block; }
+    pre.selector {
+      background: #0b1220;
+      color: #cfe8ff;
+      padding: 10px;
+      border-radius: 6px;
+      overflow: auto;
+      font-size: 13px;
+      margin: 8px 0 0;
+    }
+
+    /* Responsive */
+    @media (max-width:720px) {
+      .row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day5 — CSS Box Model & Backgrounds</h1>
+  <p class="lead">Examples of borders, padding, margins, border-radius, and background colors in CSS.</p>
+
+  <!-- BORDERS -->
+  <section class="demo" aria-label="Borders example">
+    <div class="label">1) Borders</div>
+    <div class="row">
+      <div class="box">
+        <strong>CSS</strong>
+        <div class="note">
+          Borders can be solid, dotted, dashed, double, etc. Control width, style, and color.
+        </div>
+        <pre class="selector">.border-example {
+  border: 5px solid #e11d48;
+  border-style: dotted; /* or dashed, double, none */
+}</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="border-example">Solid Border</div>
+          <div class="border-example dotted" style="margin-top:8px;">Dotted Border</div>
+          <div class="border-example dashed" style="margin-top:8px;">Dashed Border</div>
+          <div class="border-example double" style="margin-top:8px;">Double Border</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PADDING -->
+  <section class="demo" aria-label="Padding example">
+    <div class="label">2) Padding</div>
+    <div class="row">
+      <div class="box">
+        <strong>CSS</strong>
+        <div class="note">
+          Padding adds space inside the element, between the content and the border.
+        </div>
+        <pre class="selector">.padding-example {
+  padding: 20px; /* all sides */
+  padding-top: 40px; /* top only */
+  padding-right: 40px; /* right only */
+  /* etc. */
+}</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="padding-example">Padding: 20px (all)</div>
+          <div class="padding-example top" style="margin-top:8px;">Top: 40px</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARGINS -->
+  <section class="demo" aria-label="Margins example">
+    <div class="label">3) Margins</div>
+    <div class="row">
+      <div class="box">
+        <strong>CSS</strong>
+        <div class="note">
+          Margins add space outside the element, between the border and other elements.
+        </div>
+        <pre class="selector">.margin-example {
+  margin: 20px; /* all sides */
+  margin-top: 40px; /* top only */
+  margin-right: 40px; /* right only */
+  /* etc. */
+}</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="margin-example">Margin: 20px</div>
+          <div class="margin-example top" style="margin-top:8px;">Top: 40px</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BORDER-RADIUS -->
+  <section class="demo" aria-label="Border-radius example">
+    <div class="label">4) Border-radius</div>
+    <div class="row">
+      <div class="box">
+        <strong>CSS</strong>
+        <div class="note">
+          Border-radius rounds the corners of an element. Use 50% for circles.
+        </div>
+        <pre class="selector">.radius-example {
+  border-radius: 10px;
+  border-radius: 50%; /* circle */
+  border-radius: 50px; /* pill */
+}</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="radius-example">Rounded (10px)</div>
+          <div class="radius-example circle" style="margin-top:8px;">Circle</div>
+          <div class="radius-example pill" style="margin-top:8px;">Pill Shape</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKGROUND COLORS -->
+  <section class="demo" aria-label="Background colors example">
+    <div class="label">5) Background Colors</div>
+    <div class="row">
+      <div class="box">
+        <strong>CSS</strong>
+        <div class="note">
+          Set solid colors or gradients. Colors can be named, hex, rgb, hsl, etc.
+        </div>
+        <pre class="selector">.bg-example {
+  background-color: #dc2626; /* red */
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+}</pre>
+      </div>
+
+      <div class="box">
+        <strong>Rendered</strong>
+        <div style="margin-top:8px;">
+          <div class="bg-example bg-red">Red Background</div>
+          <div class="bg-example bg-blue" style="margin-top:8px;">Blue Background</div>
+          <div class="bg-example bg-green" style="margin-top:8px;">Green Background</div>
+          <div class="bg-example bg-gradient" style="margin-top:8px;">Gradient</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top:18px;color:#64748b;font-size:13px">
+    Tip: These properties control the spacing, shape, and appearance of elements in the box model.
+  </footer>
+</body>
+</html>
